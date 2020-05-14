@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Todo from './components/Todo'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App6 extends Component{
+  constructor(){
+    super()
+    this.state = {
+      list: [],
+      userInput:''
+    }
+
+    this.addToDo = this.addToDo.bind(this)
+  }
+  listImput(val){
+    this.setState({userInput: val})
+    //console.log(this.state)
+  }
+
+  addToDo(){
+    console.log(this.state.list)
+    this.setState(
+      {
+        list: this.state.list.concat([this.state.userInput]),
+        userInput:''
+      })
+
+      console.log(this.state)
+
+  }
+
+  render(){
+    let list = this.state.list.map((element, index) => {
+      return <Todo key={index} task={element} />;
+    });
+
+    return(
+      <div className="App">
+        <input  value={this.state.userInput} onChange={(e)=>this.listImput(e.target.value)} />
+        <button onClick={this.addToDo}>Add</button>
+      <div>
+        {list}
+      </div>
+      
+      </div>
+    
+    )
+  }
 }
 
-export default App;
